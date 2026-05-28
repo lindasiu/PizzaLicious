@@ -1,0 +1,11 @@
+=========================================
+         PIZZA-LICIOUS OFFICIAL RECEIPT  
+=========================================
+
+1. LARGE Pizza, CAULIFLOWER Crust, BBQ Sauce, Cheese: GOAT_CHEESE | Meats: [BACON]. Total Price: $21.75
+---------------------------------------
+TOTAL DUE: $  21.75
+---------------------------------------
+
+=========================================
+Thank you for dining with Pizza-Licious!

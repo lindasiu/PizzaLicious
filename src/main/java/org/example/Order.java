@@ -42,7 +42,7 @@ public class Order {
 
         int itemCounter = 1;
 
-        for(int i = pizzas.size() - 1; i >= pizzas.size(); i--){
+        for(int i = pizzas.size() - 1; i >= 0; i--){
             System.out.println(itemCounter + ". " + pizzas.get(i).toString());
             itemCounter++;
         }
@@ -58,6 +58,39 @@ public class Order {
         System.out.println("-------------------------------------------");
         System.out.println(String.format("TOTAL DUE: $%7.2f", totalPrice()));
         System.out.println("-------------------------------------------");
+    }
+    public boolean isEmpty(){
+        return pizzas.isEmpty() && drinks.isEmpty() && garlicKnots.isEmpty();
+    }
+    public void clearOrder(){
+        pizzas.clear();
+        drinks.clear();
+        garlicKnots.clear();
+    }
+    public String getReceiptDetailsAsString(){
+        StringBuilder sb = new StringBuilder();
+        int itemCounter = 1;
+
+        for(int i = pizzas.size() - 1; i >= 0; i--){
+            Pizza p = pizzas.get(i);
+            sb.append(itemCounter).append(". ").append(p.toString()).append("\n");
+            itemCounter++;
+        }
+        for(int i = drinks.size() - 1; i >= 0; i--){
+            DrinkSize d = drinks.get(i);
+            sb.append(itemCounter).append(". ").append(d).append(" DRINK - Price: $").append(String.format("%.2f", d.getPrice())).append("\n");
+            itemCounter++;
+        }
+        for(int i = garlicKnots.size() - 1; i >= 0; i--){
+            GarlicKnots gk = garlicKnots.get(i);
+            sb.append(itemCounter).append(". ").append(gk).append(" - Price: $").append(String.format("%.2f", gk.getPrice())).append("\n");
+            itemCounter++;
+        }
+        sb.append("---------------------------------------\n");
+        sb.append(String.format("TOTAL DUE: $%7.2f\n", totalPrice()));
+        sb.append("---------------------------------------\n");
+        return sb.toString();
+
     }
 
 }
