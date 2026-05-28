@@ -1,11 +1,11 @@
 package org.example;
 
 public enum Cheese {
-    MOZZARELLA(0.75, 1.50, 2.75, 0.30, 0.60, 0.90),
-    PARMESAN(0.75, 1.50, 2.75, 0.30, 0.60, 0.90),
-    RICOTTA(0.75, 1.50, 2.75, 0.30, 0.60, 0.90),
-    GOAT_CHEESE(0.75, 1.50, 2.75, 0.30, 0.60, 0.90),
-    BUFFALO(0.75, 1.50, 2.75, 0.30, 0.60, 0.90);
+    MOZZARELLA(0.75, 1.50, 2.25, 0.30, 0.60, 0.90),
+    PARMESAN(0.75, 1.50, 2.25, 0.30, 0.60, 0.90),
+    RICOTTA(0.75, 1.50, 2.25, 0.30, 0.60, 0.90),
+    GOAT_CHEESE(0.75, 1.50, 2.25, 0.30, 0.60, 0.90),
+    BUFFALO(0.75, 1.50, 2.25, 0.30, 0.60, 0.90);
 
     private final double personalPrice;
     private final double mediumPrice;

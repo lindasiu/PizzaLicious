@@ -1,0 +1,14 @@
+[35m=========================================
+         PIZZA-LICIOUS OFFICIAL RECEIPT  
+=========================================
+
+[0m1. MEDIUM (Stuffed Crust Upgrade!) Pizza, THICK Crust, BBQ Sauce, Cheese: BUFFALO (with extra Cheese) | Veggies: [OLIVES]. Total Price: $16.10
+2. LARGE DRINK - Price: $3.00
+3. GARLIC_KNOTS - Price: $1.50
+[33m---------------------------------------
+TOTAL DUE: $  20.60
+---------------------------------------
+[0m[35m
+=========================================
+[0m[36mThank you for dining with Pizza-Licious!
+[0m
