@@ -353,7 +353,7 @@ public class Main {
                 scanner.nextLine();
 
                 if(vegChoice == 1){
-                    customPizza.addRegularTopping();
+                    customPizza.addRegularTopping();.
                 }
             }
         }
