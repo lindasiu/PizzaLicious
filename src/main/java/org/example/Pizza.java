@@ -7,25 +7,30 @@ public class Pizza {
     private PizzaSizes pizzaSize;
     private Crust crust;
     private Sauces sauce;
+    private Cheese cheese;
+    private boolean hasExtraCheese;
     private boolean stuffedCrust;
 
     private List<Meats> meats;
     private List<Meats> extraMeats;
-    private List<Cheese> cheeses;
-    private List<Cheese> extraCheese;
+    //private List<Cheese> cheeses;
+    //private List<Cheese> extraCheese;
     private List<RegularToppings> regularToppings;
 
-    public Pizza(PizzaSizes pizzaSize, Crust crust, Sauces sauce, boolean stuffedCrust) {
+    public Pizza(PizzaSizes pizzaSize, Crust crust, Sauces sauce, Cheese cheese, boolean hasExtraCheese, boolean stuffedCrust) {
         this.pizzaSize = pizzaSize;
         this.crust = crust;
         this.sauce = sauce;
+        this.cheese = cheese;
+        this.hasExtraCheese = hasExtraCheese;
         this.stuffedCrust = stuffedCrust;
 
         this.meats = new ArrayList<>();
         this.extraMeats = new ArrayList<>();
-        this.cheeses = new ArrayList<>();
-        this.extraCheese = new ArrayList<>();
+        //this.cheeses = new ArrayList<>();
+        //this.extraCheese = new ArrayList<>();
         this.regularToppings = new ArrayList<>();
+
     }
     public void addMeat(Meats meat){
         meats.add(meat);
@@ -33,12 +38,12 @@ public class Pizza {
     public void addExtraMeat(Meats meat){
         extraMeats.add(meat);
     }
-    public void addCheese(Cheese cheese){
-        cheeses.add(cheese);
-    }
-    public void addExtraCheese(Cheese cheese){
-        extraCheese.add(cheese);
-    }
+   // public void addCheese(Cheese cheese){
+     //   cheeses.add(cheese);
+    //}
+    //public void addExtraCheese(Cheese cheese){
+      //  extraCheese.add(cheese);
+    //}
     public void addRegularTopping(RegularToppings toppings) {
         regularToppings.add(toppings);
     }
@@ -70,30 +75,38 @@ public class Pizza {
                     break;
             }
         }
+        total += cheese.getPrice(pizzaSize);
+        if(hasExtraCheese){
+            total += cheese.getExtraPrice(pizzaSize);
+        }
         for(Meats m : meats){
             total += m.getPrice(pizzaSize);
         }
         for(Meats em : extraMeats){
             total += em.getExtraMeat(pizzaSize);
         }
-        for(Cheese c : cheeses){
-            total += c.getPrice(pizzaSize);
+        for(RegularToppings rt : regularToppings){
+            total += 0;
         }
-        for(Cheese ec : extraCheese){
-            total += ec.getExtraPrice(pizzaSize);
-        }
+
         return total;
     }
     @Override
     public String toString(){
-        String description = pizzaSize + " Pizza with " + crust + " crust and " + sauce + " sauce. ";
+        String exCheese = hasExtraCheese ? " (with extra Cheese)" : "";
+        String stuffedC = stuffedCrust ? " (Stuffed Crust Upgrade!)" : "";
+
+        String description = pizzaSize + stuffedC + " Pizza, " + crust + " Crust, " + sauce + " Sauce, Cheese: " + cheese + exCheese;
 
         //if they add extras
         if(!meats.isEmpty()){
-            description += " Meats: " + meats;
+            description += " | Meats: " + meats;
         }
         if(!extraMeats.isEmpty()){
             description += " (Extra: " + extraMeats + ")";
+        }
+        if(!regularToppings.isEmpty()){
+            description += " | Veggies: " + regularToppings;
         }
         description += ". Total Price: $" + String.format("%.2f", totalPrice());
         return description;

@@ -1,13 +1,11 @@
 package org.example;
 
-public enum DrinkSize {
-    SMALL(2.00),
-    MEDIUM(2.50),
-    LARGE(3.00);
+public enum GarlicKnots {
+    GARLIC_KNOTS(1.50);
 
     private final double price;
 
-    DrinkSize(double price){
+    GarlicKnots(double price){
         this.price = price;
     }
     public double getPrice(){
