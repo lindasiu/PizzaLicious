@@ -1,4 +1,5 @@
 package org.example;
+import java.nio.channels.ScatteringByteChannel;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -80,7 +81,44 @@ public class UserInterface {
 
             switch (orderChoice) {
                 case 1:
-                    buildCustomPizza(currentOrder);
+                    //buildCustomPizza(currentOrder);
+                    System.out.println(ANSI_YELLOW + "\n----- Select Pizza Style -----" + ANSI_RESET);
+                    System.out.println("1) Custom Pizza (Build You Own)");
+                    System.out.println("2) Signature Margherita 12\"");
+                    System.out.println("Choice: ");
+
+                    try{
+                        int pizzaStyle = scanner.nextInt();
+                        scanner.nextLine();
+                        if(pizzaStyle ==1){
+                            buildCustomPizza(currentOrder);
+                        }else if(pizzaStyle == 2){
+                            PizzaSizes sizes = PizzaSizes.MEDIUM;
+                            Crust crust = promptForCrust();
+                            boolean stuffed = promptForStuffedCrust();
+
+                            Pizza signaturePizza = new MargheritaPizza(sizes, crust, stuffed);
+                            System.out.println(ANSI_CYAN + "\n12\" Margherita Pizza Added!" + ANSI_RESET);
+
+                            System.out.println("\nWould you like to customize signature pizza?");
+                            System.out.println("1) Yes");
+                            System.out.println("2) No");
+                            System.out.println("Choice: ");
+                            int modChoice = scanner.nextInt();
+                            scanner.nextLine();
+
+                            if (modChoice == 1) {
+                                yesExtraToppings(signaturePizza);
+
+                            }
+                            currentOrder.addPizza(signaturePizza);
+                        }else{
+                            System.out.println(ANSI_RED + "Invalid selection. Please choose 1 or 2." + ANSI_RESET);
+                        }
+                    }catch(Exception e){
+                        System.out.println(ANSI_RED + "ERROR: Invalid selection." + ANSI_RESET);
+                        scanner.nextLine();
+                    }
                     break;
                 case 2:
                     System.out.println(ANSI_YELLOW + "\n----- Select Drink Size -----" + ANSI_RESET);
@@ -206,34 +244,6 @@ public class UserInterface {
                 scanner.nextLine();
             }
         }
-
-        Sauces selectedSauce = null;
-        while (selectedSauce == null) {
-            System.out.println(ANSI_YELLOW + "\n----- Select Sauce -----" + ANSI_RESET);
-            System.out.println("1) Marinara");
-            System.out.println("2) Alfredo");
-            System.out.println("3) Pesto");
-            System.out.println("4) BBQ");
-            System.out.println("5) Buffalo");
-            System.out.println("6) Olive Oil");
-            System.out.print("Choice: ");
-            try {
-                int sauceChoice = scanner.nextInt();
-                scanner.nextLine();
-
-                if (sauceChoice == 1) selectedSauce = Sauces.MARINARA;
-                else if (sauceChoice == 2) selectedSauce = Sauces.ALFREDO;
-                else if (sauceChoice == 3) selectedSauce = Sauces.PESTO;
-                else if (sauceChoice == 4) selectedSauce = Sauces.BBQ;
-                else if (sauceChoice == 5) selectedSauce = Sauces.BUFFALO;
-                else if (sauceChoice == 6) selectedSauce = Sauces.OLIVE_OIL;
-                else System.out.println(ANSI_RED + "Invalid option. Please choose a number between 1-6." + ANSI_RESET);
-            } catch (Exception e) {
-                System.out.println(ANSI_RED + "Please enter a number." + ANSI_RESET);
-                scanner.nextLine();
-            }
-        }
-
         Cheese selectedCheese = null;
         while (selectedCheese == null) {
             System.out.println(ANSI_YELLOW + "\n----- Select Cheese -----" + ANSI_RESET);
@@ -258,7 +268,6 @@ public class UserInterface {
                 scanner.nextLine();
             }
         }
-
         boolean extraCheeseSelected = false;
         boolean extraCheeses = true;
         while (extraCheeses) {
@@ -285,7 +294,6 @@ public class UserInterface {
                 scanner.nextLine();
             }
         }
-
         boolean stuffedCrustSelected = false;
         boolean stuffedCrusted = true;
         while (stuffedCrusted) {
@@ -313,7 +321,44 @@ public class UserInterface {
             }
         }
 
-        Pizza customPizza = new Pizza(selectedSize, selectedCrust, selectedSauce, selectedCheese, extraCheeseSelected, stuffedCrustSelected);
+        Pizza customPizza = new Pizza(selectedSize, selectedCrust, selectedCheese, extraCheeseSelected, stuffedCrustSelected);
+
+        boolean addingSauces = true;
+        while (addingSauces) {
+            System.out.println(ANSI_YELLOW + "\n----- Select Sauces -----" + ANSI_RESET);
+            System.out.println("1) Marinara");
+            System.out.println("2) Alfredo");
+            System.out.println("3) Pesto");
+            System.out.println("4) BBQ");
+            System.out.println("5) Buffalo");
+            System.out.println("6) Olive Oil");
+            System.out.println("0) DONE");
+            System.out.print("Choice: ");
+            try {
+                int sauceChoice = scanner.nextInt();
+                scanner.nextLine();
+
+                if (sauceChoice == 1) {
+                    customPizza.addSauce(Sauces.MARINARA);
+                } else if (sauceChoice == 2) {
+                    customPizza.addSauce(Sauces.ALFREDO);
+                } else if (sauceChoice == 3) {
+                    customPizza.addSauce(Sauces.PESTO);
+                } else if (sauceChoice == 4) {
+                    customPizza.addSauce(Sauces.BBQ);
+                } else if (sauceChoice == 5){
+                    customPizza.addSauce(Sauces.BUFFALO);
+            }else if (sauceChoice == 6) {
+                    customPizza.addSauce(Sauces.OLIVE_OIL);
+                }
+                else if(sauceChoice == 0){
+                    addingSauces = false;
+        }else System.out.println(ANSI_RED + "Invalid option. Please choose a number between 0-6." + ANSI_RESET);
+            } catch (Exception e) {
+                System.out.println(ANSI_RED + "Please enter a number." + ANSI_RESET);
+                scanner.nextLine();
+            }
+        }
 
         boolean addingToppings = true;
         while (addingToppings) {
@@ -464,6 +509,86 @@ public class UserInterface {
                 }
             } catch (Exception e) {
                 System.out.println(ANSI_RED + "Please enter a number." + ANSI_RESET);
+                scanner.nextLine();
+            }
+        }
+    }
+    public Crust promptForCrust(){
+        Crust selectedCrust = null;
+        while(selectedCrust == null){
+            System.out.println(ANSI_YELLOW + "\n----- Select Crust Type -----" + ANSI_RESET);
+            System.out.println("1) Thin\n2) Regular\n3) Thick\n4) Cauliflower");
+            System.out.println("Choice: ");
+            try{
+                int crustChoice = scanner.nextInt();
+                scanner.nextLine();
+                if(crustChoice == 1) selectedCrust = Crust.THIN;
+                else if(crustChoice == 2) selectedCrust = Crust.REGULAR;
+                else if(crustChoice == 3) selectedCrust = Crust.THICK;
+                else if(crustChoice == 4) selectedCrust = Crust.CAULIFLOWER;
+                else System.out.println(ANSI_RED + "Invalid option." + ANSI_RESET);
+            }catch(Exception e){
+                System.out.println(ANSI_RED + "Please enter a number." + ANSI_RESET);
+                scanner.nextLine();
+            }
+        }return selectedCrust;
+    }
+    public boolean promptForStuffedCrust(){
+        while(true){
+            System.out.println(ANSI_YELLOW + "\n----- Would you like to add Stuffed Crust? -----" + ANSI_RESET);
+            System.out.println("1) Yes (Extra $$$)\n2) No");
+            System.out.println("Choice: ");
+            try{
+                int stuffedChoice = scanner.nextInt();
+                scanner.nextLine();
+                if(stuffedChoice == 1) return true;
+                if(stuffedChoice == 2) return false;
+                System.out.println(ANSI_RED + "Invalid option." + ANSI_RESET);
+            }catch(Exception e){
+                System.out.println(ANSI_RED + "Please enter a number." + ANSI_RESET);
+                scanner.nextLine();
+            }
+        }
+    }
+    public void yesExtraToppings(Pizza pizza){
+        boolean adding = true;
+        while(adding){
+            System.out.println(ANSI_YELLOW + "\n----- Customize Signature Pizza Toppings -----" + ANSI_RESET);
+            System.out.println("1)Add Meat\n2) Add Veggie\n0) DONE!");
+            System.out.println("Choice: ");
+            try{
+                int type = scanner.nextInt();
+                scanner.nextLine();
+                if(type == 1){
+                    System.out.println(ANSI_YELLOW + "\n1) Pepperoni\n2) Sausage\n3) Ham\n4) Bacon\n5) Chicken\n6) Meatball");
+                    System.out.println("Choice: ");
+                    int choice = scanner.nextInt();
+                    scanner.nextLine();
+                    if(choice == 1) pizza.addMeat(Meats.PEPPERONI);
+                    else if (choice == 2) pizza.addMeat(Meats.SAUSAGE);
+                    else if (choice == 3) pizza.addMeat(Meats.HAM);
+                    else if (choice == 4) pizza.addMeat(Meats.BACON);
+                    else if (choice == 5) pizza.addMeat(Meats.CHICKEN);
+                    else if (choice == 6) pizza.addMeat(Meats.MEATBALL);
+                }else if(type == 2){
+                    System.out.println(ANSI_YELLOW + "\n1) Onions\2) Mushrooms\n3) Bell Peppers\n4) Olives\n5) Tomatoes\n6) Spinach\n7) Basil\n8) Pineapple\n9) Anchovies\"");
+                    System.out.println("Choice: ");
+                    int choice = scanner.nextInt();
+                    scanner.nextLine();
+                    if(choice == 1) pizza.addRegularTopping(RegularToppings.ONIONS);
+                    else if (choice == 2) pizza.addRegularTopping(RegularToppings.MUSHROOMS);
+                    else if (choice == 3) pizza.addRegularTopping(RegularToppings.BELL_PEPPERS);
+                    else if (choice == 4) pizza.addRegularTopping(RegularToppings.OLIVES);
+                    else if (choice == 5) pizza.addRegularTopping(RegularToppings.TOMATOES);
+                    else if (choice == 6) pizza.addRegularTopping(RegularToppings.SPINACH);
+                    else if (choice == 7) pizza.addRegularTopping(RegularToppings.BASIL);
+                    else if (choice == 8) pizza.addRegularTopping(RegularToppings.PINEAPPLE);
+                    else if (choice == 9) pizza.addRegularTopping(RegularToppings.ANCHOVIES);
+                }else if (type == 0) {
+                    adding = false;
+                }
+                }catch(Exception e){
+                System.out.println(ANSI_RED + "Invalid input." + ANSI_RESET);
                 scanner.nextLine();
             }
         }

@@ -1,0 +1,15 @@
+[35m=========================================
+         PIZZA-LICIOUS OFFICIAL RECEIPT  
+=========================================
+
+[0m1. PERSONAL (Stuffed Crust Upgrade!) Pizza, REGULAR Crust, [MARINARA] Sauce, Cheese: MOZZARELLA (with extra Cheese) | Meats: [HAM] (Extra: [PEPPERONI]) | Veggies: [PINEAPPLE]. Total Price: $12.05
+2. LARGE DRINK - Price: $3.00
+3. PARMESAN - Price: $0.00
+4. RED_PEPPER - Price: $0.00
+[33m---------------------------------------
+TOTAL DUE: $  15.05
+---------------------------------------
+[0m[35m
+=========================================
+[0m[36mThank you for dining with Pizza-Licious!
+[0m

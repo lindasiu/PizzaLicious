@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pizza {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_RED = "\u001B[31m";
+
     private PizzaSizes pizzaSize;
     private Crust crust;
-    private Sauces sauce;
+    private List<Sauces> sauces;
     private Cheese cheese;
     private boolean hasExtraCheese;
     private boolean stuffedCrust;
@@ -17,10 +23,10 @@ public class Pizza {
     //private List<Cheese> extraCheese;
     private List<RegularToppings> regularToppings;
 
-    public Pizza(PizzaSizes pizzaSize, Crust crust, Sauces sauce, Cheese cheese, boolean hasExtraCheese, boolean stuffedCrust) {
+    public Pizza(PizzaSizes pizzaSize, Crust crust, Cheese cheese, boolean hasExtraCheese, boolean stuffedCrust) {
         this.pizzaSize = pizzaSize;
         this.crust = crust;
-        this.sauce = sauce;
+        this.sauces = new ArrayList<>(); //so margherita pizza can have 2 sauces
         this.cheese = cheese;
         this.hasExtraCheese = hasExtraCheese;
         this.stuffedCrust = stuffedCrust;
@@ -37,6 +43,9 @@ public class Pizza {
     }
     public void addExtraMeat(Meats meat){
         extraMeats.add(meat);
+    }
+    public void addSauce(Sauces sauce){
+        this.sauces.add(sauce);
     }
    // public void addCheese(Cheese cheese){
      //   cheeses.add(cheese);
@@ -96,7 +105,7 @@ public class Pizza {
         String exCheese = hasExtraCheese ? " (with extra Cheese)" : "";
         String stuffedC = stuffedCrust ? " (Stuffed Crust Upgrade!)" : "";
 
-        String description = pizzaSize + stuffedC + " Pizza, " + crust + " Crust, " + sauce + " Sauce, Cheese: " + cheese + exCheese;
+        String description = pizzaSize + stuffedC + " Pizza, " + crust + " Crust, " + sauces + " Sauce, Cheese: " + cheese + exCheese;
 
         //if they add extras
         if(!meats.isEmpty()){
